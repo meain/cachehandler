@@ -6,20 +6,16 @@ Apihandler:
     * The final image returned from the api will be a address of image from eywa server
 '''
 import os
+from unqlite import UnQLite
 
-class filehandler:
+class apihandler:
     base_dir = os.path.dirname(os.path.realpath(__file__))
     data_file_location = base_dir + '/apihandlerdata'
 
     def __init__(self):
-        print "Caching location :" + self.data_file_location
-
-    def wirtedata(data):
-        file = open(w)
-
-
-class apihandler:
-    pass
+        print "Caching location: " + self.data_file_location
+        self.db = UnQLite(data_file_location)
+        self.api_data = db.collection('apidata')
 
 
 
