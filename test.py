@@ -10,7 +10,7 @@ def main():
         Original : venue.search(locality='New York')
     '''
     data = handle.api_call(venue.search, locality='New York')
-    print type(data)
+    print data
 
 if __name__ == '__main__':
     main()

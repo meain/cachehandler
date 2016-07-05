@@ -11,7 +11,7 @@ import datetime
 class apihandler:
 
     def __init__(self):
-        self.db = UnQLite('datahandlerdata')
+        self.db = UnQLite('cachehandlerdata')
         self.api_cache = self.db.collection('apicache')
         self.api_cache.create()
 
