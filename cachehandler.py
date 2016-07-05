@@ -45,7 +45,7 @@ class imagehandler:
         * cache data is stored in a nosql database
     '''
     def __init__(self):
-        self.db = unqlite('cachehandlerdata')
+        self.db = UnQLite('cachehandlerdata')
         self.api_cache = self.db.collection('imagecache')
         self.api_cache.create()
 
@@ -64,7 +64,7 @@ class imagehandler:
         if not cache_data:
             return cache_data
         else :
-            return cache_data[0]['location']
+            return cache_data[-1]['location']
 
     def get_image(self, image_link):
         cache_data = self.read_cache(image_link)
@@ -75,4 +75,9 @@ class imagehandler:
         else :
             print ('Getting image from cache...')
             location = cache_data
+            if os.path.isfile(location):
+                return location
+            else :
+                print ('Cached but file deleted...')
+                location = self.write_cache(image_link)
             return location
