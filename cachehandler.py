@@ -20,9 +20,7 @@ class apihandler:
         self.api_cache.store({'api_function':str(api_function).split(' ')[2], 'args':str(args), 'kwargs':str(kwargs), 'data':data, 'time':datetime.datetime.now()})
 
     def read_cache(self, api_function, args, kwargs):
-        import ipdb; ipdb.set_trace()
         cache_data = self.api_cache.filter(lambda api: api['api_function']==str(api_function).split(' ')[2] and api['args']==str(args) and api['kwargs']==str(kwargs))
-        import ipdb; ipdb.set_trace()
         if not cache_data:
             return cache_data
         else :
