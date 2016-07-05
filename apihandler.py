@@ -7,8 +7,6 @@ Apihandler:
 '''
 from unqlite import UnQLite
 import datetime
-from locu.api import VenueApiClient
-from apikeys import *
 
 class apihandler:
 
@@ -38,15 +36,3 @@ class apihandler:
             print ('Getting data from cache...')
             data = cache_data
             return data
-
-
-
-# DEBUG
-def main():
-    venue = VenueApiClient(key_locu.key)
-    handle = apihandler()
-    data = handle.api_call(venue.search, locality='New York')
-    print type(data)
-
-if __name__ == '__main__':
-    main()
