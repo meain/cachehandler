@@ -1,4 +1,4 @@
-from imagehandler import imagehandler
+from cachehandler import imagehandler
 
 def main():
     img = imagehandler()

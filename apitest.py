@@ -1,4 +1,4 @@
-from apihandler import apihandler
+from cachehandler import apihandler
 from locu.api import VenueApiClient
 from apikeys import *
 
