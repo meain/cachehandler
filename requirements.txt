@@ -1,0 +1,16 @@
+backports.shutil-get-terminal-size==1.0.0
+Cython==0.24
+decorator==4.0.10
+futures==3.0.5
+greenlet==0.4.10
+httplib2==0.9.2
+msgpack-python==0.4.7
+pathlib2==2.1.0
+pexpect==4.1.0
+pickleshare==0.7.2
+ptyprocess==0.5.1
+simplegeneric==0.8.1
+six==1.10.0
+traitlets==4.2.2
+trollius==2.1
+unqlite==0.5.3
