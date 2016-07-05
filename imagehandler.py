@@ -7,7 +7,7 @@ import datetime
 import urllib
 import os
 
-class apihandler:
+class imagehandler:
 
     def __init__(self):
         self.db = UnQLite('cachehandlerdata')
@@ -16,9 +16,9 @@ class apihandler:
 
     def write_cache(self,image_link):
         # base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-        name = self.api_cache.last_record_id() + 1
+        name = self.api_cache.__len__() + 1
         extension = image_link.split('.')[-1]
-        filename = name + '.' + extension
+        filename = str(name) + '.' + str(extension)
         image_location = filename
         urllib.urlretrieve(image_link, image_location)
         self.api_cache.store({'image_link':image_link,'location':image_location, 'time':datetime.datetime.now()})
@@ -35,7 +35,7 @@ class apihandler:
         cache_data = self.read_cache(image_link)
         if not cache_data :
             print ('Downloading image...')
-            location = write_cache(image_link)
+            location = self.write_cache(image_link)
             return location
         else :
             print ('Getting image from cache...')
