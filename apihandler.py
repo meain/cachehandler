@@ -7,22 +7,49 @@ Apihandler:
 '''
 import os
 from unqlite import UnQLite
+import datetime
+from locu.api import VenueApiClient
+from apikeys import *
 
 class apihandler:
-    base_dir = os.path.dirname(os.path.realpath(__file__))
-    data_file_location = base_dir + '/apihandlerdata'
 
     def __init__(self):
-        print "Caching location: " + self.data_file_location
-        self.db = UnQLite(data_file_location)
-        self.api_data = db.collection('apidata')
+        self.db = UnQLite('datahandlerdata')
+        self.api_cache = self.db.collection('apicache')
+        self.api_cache.create()
 
+    def write_cache(self, api_function, args, kwargs, data):
+        self.api_cache.store({'api_function':str(api_function).split(' ')[2], 'args':args, 'kwargs':kwargs, 'data':data, 'time':datetime.datetime.now()})
+
+    def read_cache(self, api_function, args, kwargs):
+        cache_data = self.api_cache.filter(lambda api: api['api_function']==str(api_function).split(' ')[2] and api['args']==args and api['kwargs']==kwargs)
+        import ipdb; ipdb.set_trace()
+        # if length(cache_data) == 0:
+        #     return cache_data
+        # else :
+        #     return cache_data[0]['data']
+        return cache_data
+
+    def api_call(self, api_function, *args, **kwargs):
+        cache_data = self.read_cache(api_function, args, kwargs)
+        print cache_data
+        if not cache_data :
+            print ('Getting data from cache...')
+            data = api_function(*args, **kwargs)
+            self.write_cache(api_function, args, kwargs, data)
+            return data
+        else :
+            data = cache_data
+            return data
 
 
 
 # DEBUG
 def main():
-    filehandler()
+    venue = VenueApiClient(key_locu.key)
+    handle = apihandler()
+    data = handle.api_call(venue.search, locality='Boston')
+    print (data)
 
 if __name__ == '__main__':
     main()
