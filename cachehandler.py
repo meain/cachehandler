@@ -2,6 +2,10 @@ from unqlite import UnQLite
 import datetime
 import os
 import urllib
+try:
+    import pickle
+except:
+    import cPickle as pickle
 
 class apihandler:
     '''
@@ -17,18 +21,18 @@ class apihandler:
         self.api_cache.create()
 
     def write_cache(self, api_function, args, kwargs, data):
-        self.api_cache.store({'api_function':str(api_function).split(' ')[2], 'args':str(args), 'kwargs':str(kwargs), 'data':data, 'time':datetime.datetime.now()})
+        self.api_cache.store({'api_function':str(api_function).split(' ')[2], 'args':str(args), 'kwargs':str(kwargs), 'data':pickle.dumps(data), 'time':datetime.datetime.now()})
 
     def read_cache(self, api_function, args, kwargs):
         cache_data = self.api_cache.filter(lambda api: api['api_function']==str(api_function).split(' ')[2] and api['args']==str(args) and api['kwargs']==str(kwargs))
-        if not cache_data:
-            return cache_data
+        if not cache_data or cache_data[-1]['data'] is None:
+            return None
         else :
-            return cache_data[-1]['data']
+            return pickle.loads(cache_data[-1]['data'])
 
     def api_call(self, api_function, *args, **kwargs):
         cache_data = self.read_cache(api_function, args, kwargs)
-        if not cache_data :
+        if cache_data is None:
             print ('Querying api as no data found in cache...')
             data = api_function(*args, **kwargs)
             self.write_cache(api_function, args, kwargs, data)
