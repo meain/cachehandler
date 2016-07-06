@@ -11,7 +11,7 @@ venue.search(locality='NY', menu='pizza')
 You can use :
 
 ```python
-import apihandler form cachehandler
+from cachehandler import apihandler
 
 handle=apihandler()
 handle.api_call(venue.search, locality='NY', menu='pizza')

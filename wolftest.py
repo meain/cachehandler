@@ -1,7 +1,6 @@
 from cachehandler import apihandler
 import wolframalpha
 from apikeys import *
-import pickle
 
 def main():
     client = wolframalpha.Client(key_wolfram.key)
