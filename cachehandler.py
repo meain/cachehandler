@@ -21,7 +21,7 @@ class apihandler:
         self.api_cache.create()
 
     def write_cache(self, api_function, args, kwargs, data):
-        self.api_cache.store({'api_function':str(api_function).split(' ')[2], 'args':str(args), 'kwargs':str(kwargs), 'data':pickle.dumps(data), 'time':datetime.datetime.now()})
+        self.api_cache.store({'api_function':str(api_function).split(' ')[2], 'args':str(args), 'kwargs':str(kwargs), 'data':pickle.dumps(data), 'time':pickle.dumps(datetime.datetime.now())})
 
     def read_cache(self, api_function, args, kwargs):
         cache_data = self.api_cache.filter(lambda api: api['api_function']==str(api_function).split(' ')[2] and api['args']==str(args) and api['kwargs']==str(kwargs))
